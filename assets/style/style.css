@@ -1,0 +1,97 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2em 0;
+}
+
+h1 {
+    margin-bottom: 1em;
+    color: #1f1f1f;
+}
+
+.grid-container {
+    display: grid;
+    gap: 2px;
+}
+
+.grid-item {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.tool {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    border-radius: 2em;
+    border: #ccc 1px solid;
+}
+
+.tool:hover {
+    color: yellow;
+    border: 1px solid yellow;
+}
+
+.inventory {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.material-square {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.counter {
+    text-align: center;
+    margin: 0.3em;
+}
+
+.counter>span {
+    margin: 0.3em;
+}
+
+.dirt {
+
+    background-image: url('../images/dirt.png');
+}
+
+.cloud {
+    background-image: url('../images/cloud.png');
+}
+
+.leaf {
+    background-image: url('../images/leaf.png');
+}
+
+.wood {
+    background-image: url('../images/wood.png');
+}
+
+.grass {
+    background-image: url('../images/grass.png');
+}
+
+.rock {
+    background-image: url('../images/rock.png');
+}
