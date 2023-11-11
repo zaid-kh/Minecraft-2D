@@ -27,35 +27,34 @@ const inventory = {
   leaf: 0,
 };
 
-const numRows = 15; // Number of rows
-const numCols = 30; // Number of columns
+const ROWS = 15; // Number of rows
+const COLUMNS = 30; // Number of columns
+const SQUARE_SIZE = 30; // grid-item size in pixels
 
-const gridSize = 30; // New size for each square in pixels
+let gridData = [];
 
-function gridSizeStyle(numCols, numRows, gridSize) {
-  grid.style.gridTemplateColumns = `repeat(${numCols}, ${gridSize}px)`;
-  grid.style.gridTemplateRows = `repeat(${numRows}, ${gridSize}px)`;
+//
+function createGridTemplate() {
+  grid.style.gridTemplateColumns = `repeat(${COLUMNS}, ${SQUARE_SIZE}px)`;
+  grid.style.gridTemplateRows = `repeat(${ROWS}, ${SQUARE_SIZE}px)`;
 }
-function createDynamicGrid(numRows, numCols, gridSize) {
-  const gridData = [];
+function createDynamicGrid() {
+  createGridTemplate();
 
-  gridSizeStyle(numCols, numRows, gridSize);
-
-  for (let i = 0; i < numRows; i++) {
-    for (let j = 0; j < numCols; j++) {
+  for (let i = 0; i < ROWS; i++) {
+    for (let j = 0; j < COLUMNS; j++) {
       const gridItem = document.createElement("div");
       gridItem.className = "grid-item";
       gridItem.id = `${i}-${j}`;
       grid.appendChild(gridItem);
-
       gridData.push(gridItem);
     }
   }
   return gridData;
 }
-const gridData = createDynamicGrid(numRows, numCols, gridSize);
+gridData = createDynamicGrid();
 
-function createGridColors() {
+function drawGridTiles() {
   for (let g = 0; g < gridData.length; g++) {
     let [i, j] = gridData[g].getAttribute("id").split("-");
     drawDirt(Number(i), Number(j), Number(g));
@@ -65,19 +64,17 @@ function createGridColors() {
   }
 }
 
-createGridColors();
+drawGridTiles();
 
 // Draw dirt
 function drawDirt(i, j, g) {
   if (i <= 14 && i > 11 && j >= 0) {
-    // gridData[g].classList.add("red")
     gridData[g].classList.add("dirt");
   }
 }
 
 function drawGrass(i, j, g) {
   if (i == 11 && j >= 0) {
-    // gridData[g].classList.add("red")
     gridData[g].classList.add("grass");
   }
 }
@@ -112,10 +109,6 @@ function drawRocks(i, j, g) {
   if (i == 8 && j == 17) gridData[g].classList.add("rock");
 }
 
-dirtSquare.classList.add("dirt");
-rockSquare.style.backgroundColor = "blue";
-grassSquare.style.backgroundColor = "green";
-
 function updateCounters() {
   dirtCounter.textContent = inventory.dirt;
   rockCounter.textContent = inventory.rock;
@@ -124,88 +117,105 @@ function updateCounters() {
   leafCounter.textContent = inventory.leaf;
 }
 
-function highLightColor(color) {
-  color.style.border = "yellow";
-  color.style.borderStyle = "solid";
-  color.style.borderWidth = "2px";
+function highlightSelection(element) {
+  element.style.border = "yellow";
+  element.style.borderStyle = "solid";
+  element.style.borderWidth = "2px";
 }
-function removeHighLightColor(color) {
-  color.style.border = "#ccc";
-  color.style.borderStyle = "solid";
-  color.style.borderWidth = "1px";
+function removeHighlightSelection(element) {
+  element.style.border = "#ccc";
+  element.style.borderStyle = "solid";
+  element.style.borderWidth = "1px";
 }
 
 tools.addEventListener("click", (e) => {
   const target = e.target.id;
 
-  if (target === "eraser") {
-    currentTile = "eraser";
-    selectColor("eraser", shovel);
+  if (target === "shovel") {
+    currentTile = "shovel";
+    select("shovel", shovel);
   }
-  if (target === "whiteboard") {
-    currentTile = "whiteboard";
-    selectColor("whiteboard", axe);
+  if (target === "axe") {
+    currentTile = "axe";
+    select("axe", axe);
+  }
+  if (target === "pickaxe") {
+    currentTile = "pickaxe";
+    select("pickaxe", pickaxe);
   }
   // e.stopPropagation(); // Prevent the click event from bubbling
 });
 
 // ! inv event listner
-// highlight color on select
-function selectColor(target, colorSquare, inventoryColor) {
-  removeHighLightColor(dirtSquare);
-  removeHighLightColor(grassSquare);
-  removeHighLightColor(rockSquare);
-  removeHighLightColor(shovel);
-  removeHighLightColor(axe);
-  highLightColor(colorSquare);
+/**  highlight selected tool/tile */
+function select(target, appropriateElement, inventoryTile) {
+  removeHighlightSelection(dirtSquare);
+  removeHighlightSelection(grassSquare);
+  removeHighlightSelection(rockSquare);
+  removeHighlightSelection(woodSquare);
+  removeHighlightSelection(leafSquare);
+  removeHighlightSelection(shovel);
+  removeHighlightSelection(axe);
+  removeHighlightSelection(pickaxe);
+  highlightSelection(appropriateElement);
 
-  if (inventoryColor > 0) {
+  if (inventoryTile > 0) {
     currentTile = target;
   }
 }
+
 inventoryElement.addEventListener("click", (e) => {
   const target = e.target.id;
 
-  if (target === "red") {
-    selectColor("red", dirtSquare, inventory.dirt);
-  } else if (target === "green") {
-    selectColor("green", grassSquare, inventory.grass);
-  } else if (target === "blue") {
-    selectColor("blue", rockSquare, inventory.rock);
+  if (target === "dirt") {
+    select("dirt", dirtSquare, inventory.dirt);
+  } else if (target === "grass") {
+    select("grass", grassSquare, inventory.grass);
+  } else if (target === "rock") {
+    select("rock", rockSquare, inventory.rock);
+  } else if (target === "wood") {
+    select("wood", woodSquare, inventory.wood);
+  } else if (target === "leaf") {
+    select("leaf", leafSquare, inventory.leaf);
   }
 });
 
-// placing items
-grid.addEventListener("click", (event) => {
-  const gridItem = event.target;
-  if (currentTile === "eraser") {
-    const itemColor = gridItem.style.backgroundColor;
-    if (itemColor === "blue" || itemColor === "green") {
-      gridItem.style.backgroundColor = "skyblue";
-      if (itemColor === "blue") {
-        inventory.rock++;
-      } else if (itemColor === "green") {
-        inventory.grass++;
-      }
-      updateCounters();
-    }
-  } else if (currentTile === "whiteboard") {
-    const itemColor = gridItem.style.backgroundColor;
-    if (itemColor === "red") {
-      gridItem.style.backgroundColor = "skyblue";
-      inventory.dirt++;
-      updateCounters();
-    }
-  } else if (currentTile) {
-    const itemColor = gridItem.style.backgroundColor;
-    if (itemColor === "skyblue") {
-      if (inventory[currentTile] > 0) {
-        gridItem.style.backgroundColor = currentTile;
-        inventory[currentTile]--;
-        updateCounters();
-      }
-    }
+grid.addEventListener("click", (e) => {
+  const gridItem = e.target;
+  /** dirt/ grass/ rock/ wood/ leaf/ cloud/ undefined(sky) */
+  const itemTile = gridItem.classList[1];
+  console.log("itemTile: ", itemTile);
+  // using tools
+  //* if SHOVEL -> dirt/ grass
+  if (
+    currentTile === "shovel" &&
+    (itemTile === "grass" || itemTile === "dirt")
+  ) {
+    // remove block
+    gridItem.classList.remove(itemTile.toString());
+    // increment in inventory
+    inventory[itemTile]++;
+    console.log("inventory: ", inventory);
   }
+  //* if AXE -> wood/ leaves
+  if (currentTile === "axe" && (itemTile === "wood" || itemTile === "leaf")) {
+    // remove block
+    gridItem.classList.remove(itemTile.toString());
+    // increment in inventory
+    inventory[itemTile]++;
+    console.log("inventory: ", inventory);
+  }
+  //* if PICKAXE -> rock
+  if (currentTile === "pickaxe" && itemTile === "rock") {
+    // remove block
+    gridItem.classList.remove(itemTile.toString());
+    // increment in inventory
+    inventory[itemTile]++;
+    console.log("inventory: ", inventory);
+  }
+  // todo: add selection of tiles
+  // if currentTile === dirt ==> ....
+  updateCounters();
 });
 
 updateCounters();
