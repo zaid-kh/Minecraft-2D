@@ -215,8 +215,6 @@ grid.addEventListener("click", (e) => {
   const gridItem = e.target;
   /** dirt/ grass/ rock/ wood/ leaf/ cloud/ undefined(sky) */
   const itemTile = gridItem.classList[1];
-  console.log("itemTile: ", itemTile);
-  console.log("currentTile: ", currentTile);
 
   // using tools
   //* if SHOVEL -> dirt/ grass
