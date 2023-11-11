@@ -27,13 +27,12 @@ const inventory = {
   leaf: 0,
 };
 
-const numRows = 5; // Number of rows
-const numCols = 12; // Number of columns
+const numRows = 15; // Number of rows
+const numCols = 30; // Number of columns
 
-const gridSize = 100; // New size for each square in pixels
+const gridSize = 30; // New size for each square in pixels
 
 function gridSizeStyle(numCols, numRows, gridSize) {
-  grid.style.display = "grid";
   grid.style.gridTemplateColumns = `repeat(${numCols}, ${gridSize}px)`;
   grid.style.gridTemplateRows = `repeat(${numRows}, ${gridSize}px)`;
 }
@@ -59,62 +58,58 @@ const gridData = createDynamicGrid(numRows, numCols, gridSize);
 function createGridColors() {
   for (let g = 0; g < gridData.length; g++) {
     let [i, j] = gridData[g].getAttribute("id").split("-");
-    drawRed(Number(i), Number(j), Number(g));
-    drawBlue(Number(i), Number(j), Number(g));
-    drawGreen(Number(i), Number(j), Number(g));
+    drawDirt(Number(i), Number(j), Number(g));
+    drawGrass(Number(i), Number(j), Number(g));
+    drawTree(Number(i), Number(j), Number(g));
+    drawRocks(Number(i), Number(j), Number(g));
   }
 }
 
 createGridColors();
 
-function drawRed(i, j, g) {
-  if (i === 0 && j >= 0) {
+// Draw dirt
+function drawDirt(i, j, g) {
+  if (i <= 14 && i > 11 && j >= 0) {
     // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "red";
-  }
-  if (i === 4 && j <= 11) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "red";
-  }
-  if (i >= 0 && j === 0) {
-    gridData[g].style.backgroundColor = "red";
-  }
-  if (i >= 0 && j === 11) {
-    gridData[g].style.backgroundColor = "red";
+    gridData[g].classList.add("dirt");
   }
 }
-function drawBlue(i, j, g) {
-  if (i > 0 && i < 4 && j > 0 && j < 4) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "blue";
-  }
-  if (i === 2 && j === 2) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "green";
-  }
 
-  if (i > 0 && i < 4 && j > 4 && j < 8) {
+function drawGrass(i, j, g) {
+  if (i == 11 && j >= 0) {
     // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "blue";
-  }
-  if (i === 2 && j === 6) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "green";
+    gridData[g].classList.add("grass");
   }
 }
-function drawGreen(i, j, g) {
-  if (i > 0 && i < 4 && j > 7 && j < 11) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "green";
+function drawTree(i, j, g) {
+  /**tree 1 */
+  // drawing tree leaves
+  if (i > 4 && i < 8 && j > 5 && j < 9) {
+    gridData[g].classList.add("leaf");
   }
-  if (i === 2 && j === 9) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "yellow";
+  // drawing tree trunk
+  if (i > 7 && i < 11 && j === 7) {
+    gridData[g].classList.add("wood");
   }
-  if (i > 0 && i < 4 && j === 4) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "yellow";
+  /**tree 2 */
+  // drawing tree leaves
+  if (i > 4 && i <= 8 && j > 22 && j < 26) {
+    gridData[g].classList.add("leaf");
   }
+  // drawing tree trunk
+  if (i > 8 && i < 11 && j === 24) {
+    gridData[g].classList.add("wood");
+  }
+}
+function drawRocks(i, j, g) {
+  // drawing rocks on the side
+  if (i > 8 && i < 11 && j === 3) {
+    gridData[g].classList.add("rock");
+  }
+  // drawing pile of rocks
+  if (i == 10 && j > 14 && j < 20) gridData[g].classList.add("rock");
+  if (i == 9 && j > 15 && j < 19) gridData[g].classList.add("rock");
+  if (i == 8 && j == 17) gridData[g].classList.add("rock");
 }
 
 dirtSquare.classList.add("dirt");
@@ -125,6 +120,8 @@ function updateCounters() {
   dirtCounter.textContent = inventory.dirt;
   rockCounter.textContent = inventory.rock;
   grassCounter.textContent = inventory.grass;
+  woodCounter.textContent = inventory.wood;
+  leafCounter.textContent = inventory.leaf;
 }
 
 function highLightColor(color) {
@@ -184,7 +181,7 @@ grid.addEventListener("click", (event) => {
   if (currentTile === "eraser") {
     const itemColor = gridItem.style.backgroundColor;
     if (itemColor === "blue" || itemColor === "green") {
-      gridItem.style.backgroundColor = "white";
+      gridItem.style.backgroundColor = "skyblue";
       if (itemColor === "blue") {
         inventory.rock++;
       } else if (itemColor === "green") {
@@ -195,13 +192,13 @@ grid.addEventListener("click", (event) => {
   } else if (currentTile === "whiteboard") {
     const itemColor = gridItem.style.backgroundColor;
     if (itemColor === "red") {
-      gridItem.style.backgroundColor = "white";
+      gridItem.style.backgroundColor = "skyblue";
       inventory.dirt++;
       updateCounters();
     }
   } else if (currentTile) {
     const itemColor = gridItem.style.backgroundColor;
-    if (itemColor === "white") {
+    if (itemColor === "skyblue") {
       if (inventory[currentTile] > 0) {
         gridItem.style.backgroundColor = currentTile;
         inventory[currentTile]--;

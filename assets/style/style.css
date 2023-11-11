@@ -1,7 +1,6 @@
 * {
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
 }
 
 body {
@@ -20,15 +19,21 @@ h1 {
 
 .grid-container {
     display: grid;
-    gap: 2px;
 }
 
 .grid-item {
-    width: 100px;
-    height: 100px;
-    background-color: white;
+    width: 30px;
+    height: 30px;
+    background-color: skyblue;
     border: 1px solid #ccc;
     cursor: pointer;
+    background-size: cover;
+    /* This property ensures that the background image covers the entire div */
+    background-repeat: no-repeat;
+    /* This property prevents the background image from repeating */
+    background-position: center;
+    /* This property centers the background image within the div */
+
 }
 
 .tool {
@@ -60,7 +65,14 @@ h1 {
     margin: 5px;
     border: 1px solid #ccc;
     cursor: pointer;
+    background-size: cover;
+    /* This property ensures that the background image covers the entire div */
+    background-repeat: no-repeat;
+    /* This property prevents the background image from repeating */
+    background-position: center;
+    /* This property centers the background image within the div */
 }
+
 
 .counter {
     text-align: center;
@@ -89,7 +101,7 @@ h1 {
 }
 
 .grass {
-    background-image: url('../images/grass.png');
+    background-image: url('../images/grass1.png');
 }
 
 .rock {
