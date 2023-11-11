@@ -216,6 +216,8 @@ grid.addEventListener("click", (e) => {
   /** dirt/ grass/ rock/ wood/ leaf/ cloud/ undefined(sky) */
   const itemTile = gridItem.classList[1];
   console.log("itemTile: ", itemTile);
+  console.log("currentTile: ", currentTile);
+
   // using tools
   //* if SHOVEL -> dirt/ grass
   if (
@@ -226,26 +228,33 @@ grid.addEventListener("click", (e) => {
     gridItem.classList.remove(itemTile.toString());
     // increment in inventory
     inventory[itemTile]++;
-    console.log("inventory: ", inventory);
   }
   //* if AXE -> wood/ leaves
-  if (currentTile === "axe" && (itemTile === "wood" || itemTile === "leaf")) {
+  else if (
+    currentTile === "axe" &&
+    (itemTile === "wood" || itemTile === "leaf")
+  ) {
     // remove block
     gridItem.classList.remove(itemTile.toString());
     // increment in inventory
     inventory[itemTile]++;
-    console.log("inventory: ", inventory);
   }
   //* if PICKAXE -> rock
-  if (currentTile === "pickaxe" && itemTile === "rock") {
+  else if (currentTile === "pickaxe" && itemTile === "rock") {
     // remove block
     gridItem.classList.remove(itemTile.toString());
     // increment in inventory
     inventory[itemTile]++;
-    console.log("inventory: ", inventory);
   }
-  // todo: add selection of tiles
-  // if currentTile === dirt ==> ....
+  //* if OTHER_TILE -> allow putting new tile on sky only
+  else if (currentTile) {
+    if (itemTile === undefined) {
+      if (inventory[currentTile] > 0) {
+        gridItem.classList.add(currentTile.toString());
+        inventory[currentTile]--;
+      }
+    }
+  }
   updateCounters();
 });
 
