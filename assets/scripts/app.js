@@ -80,6 +80,7 @@ function drawGridTiles() {
     drawGrass(Number(i), Number(j), Number(g));
     drawTree(Number(i), Number(j), Number(g));
     drawRocks(Number(i), Number(j), Number(g));
+    drawCloud(Number(i), Number(j), Number(g));
   }
 }
 
@@ -126,6 +127,16 @@ function drawRocks(i, j, g) {
   if (i == 10 && j > 14 && j < 20) gridData[g].classList.add("rock");
   if (i == 9 && j > 15 && j < 19) gridData[g].classList.add("rock");
   if (i == 8 && j == 17) gridData[g].classList.add("rock");
+}
+function drawCloud(i, j, g) {
+  // drawing cloud-A left
+  if (i == 2 && j > 6 && j < 12) gridData[g].classList.add("cloud");
+  if (i == 1 && j > 7 && j < 11) gridData[g].classList.add("cloud");
+  if (i == 3 && j > 7 && j < 11) gridData[g].classList.add("cloud");
+  // drawing cloud-B right
+  if (i == 3 && j > 15 && j < 22) gridData[g].classList.add("cloud");
+  if (i == 2 && j > 16 && j < 21) gridData[g].classList.add("cloud");
+  if (i == 4 && j > 16 && j < 21) gridData[g].classList.add("cloud");
 }
 
 function updateCounters() {
