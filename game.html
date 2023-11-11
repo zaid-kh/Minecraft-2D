@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/style/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap"
+      rel="stylesheet"
+    />
+    <title>Meinecraft-2D</title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="./#">
+          <img
+            src="assets/images/MEINECRAFT-2D.png"
+            id="logo"
+            class="game-logo"
+            alt="Meinecraft-2D logo"
+        /></a>
+      </h1>
+    </header>
+
+    <main>
+      <div class="grid-container" id="grid">
+        <!-- Dynamic Grid for the game -->
+      </div>
+      <section class="bottom">
+        <section class="tools" id="tools">
+          <div class="tool" id="shovel">Shovel</div>
+          <div class="tool" id="axe">Axe</div>
+          <div class="tool" id="pickaxe">Pickaxe</div>
+        </section>
+        <section class="inventory" id="inv">
+          <div class="material-square dirt" id="dirt"></div>
+          <span id="dirt-counter">0</span>
+          <div class="material-square grass" id="grass"></div>
+          <span id="grass-counter">0</span>
+          <div class="material-square rock" id="rock"></div>
+          <span id="rock-counter">0</span>
+          <div class="material-square wood" id="wood"></div>
+          <span id="wood-counter">0</span>
+          <div class="material-square leaf" id="leaf"></div>
+          <span id="leaf-counter">0</span>
+        </section>
+        <button id="reset">Reset</button>
+      </section>
+    </main>
+    <script src="assets/scripts/app.js"></script>
+  </body>
+</html>

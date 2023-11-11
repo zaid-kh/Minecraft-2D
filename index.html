@@ -19,38 +19,32 @@
   <body>
     <header>
       <h1>
-        <img
-          src="assets/images/MEINECRAFT-2D.png"
-          id="logo"
-          alt="Meinecraft-2D logo"
-        />
+        <a href="#">
+          <img
+            src="assets/images/MEINECRAFT-2D.png"
+            id="logo"
+            class="landing-logo"
+            alt="Meinecraft-2D logo"
+        /></a>
       </h1>
     </header>
 
     <main>
-      <div class="grid-container" id="grid">
-        <!-- Dynamic Grid for the game -->
-      </div>
-      <section class="bottom">
-        <section class="tools" id="tools">
-          <div class="tool" id="shovel">Shovel</div>
-          <div class="tool" id="axe">Axe</div>
-          <div class="tool" id="pickaxe">Pickaxe</div>
-        </section>
-        <section class="inventory" id="inv">
-          <div class="material-square dirt" id="dirt"></div>
-          <span id="dirt-counter">0</span>
-          <div class="material-square grass" id="grass"></div>
-          <span id="grass-counter">0</span>
-          <div class="material-square rock" id="rock"></div>
-          <span id="rock-counter">0</span>
-          <div class="material-square wood" id="wood"></div>
-          <span id="wood-counter">0</span>
-          <div class="material-square leaf" id="leaf"></div>
-          <span id="leaf-counter">0</span>
-        </section>
-        <button id="reset">Reset</button>
+      <section class="tutorial">
+        <h2>Tutorial</h2>
+        <ul class="tutorial-list">
+          <li>
+            This is a simplified 2D version of the world famous Minecraft game
+          </li>
+          <li>
+            The game is designed for you to fiddle around with different tools
+            and materials
+          </li>
+          <li>Learn which tool goes with what</li>
+          <li>Have Fun!</li>
+        </ul>
       </section>
+      <a id="gameBtn" href="game.html">Play</a>
     </main>
     <script src="assets/scripts/app.js"></script>
   </body>
