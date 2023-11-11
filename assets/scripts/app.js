@@ -18,6 +18,8 @@ const grassCounter = document.getElementById("grass-counter");
 const woodCounter = document.getElementById("wood-counter");
 const leafCounter = document.getElementById("leaf-counter");
 
+const resetButton = document.getElementById("reset");
+
 let currentTile = null;
 const inventory = {
   dirt: 0,
@@ -32,6 +34,23 @@ const COLUMNS = 30; // Number of columns
 const SQUARE_SIZE = 30; // grid-item size in pixels
 
 let gridData = [];
+
+function resetWorld() {
+  // reset grid
+  grid.innerHTML = "";
+  gridData = createDynamicGrid();
+  drawGridTiles();
+  // ! might cause issue since it's a constant
+  // reset items
+  inventory.dirt = 0;
+  inventory.rock = 0;
+  inventory.grass = 0;
+  inventory.wood = 0;
+  inventory.leaf = 0;
+  updateCounters();
+  currentTile = null;
+  select();
+}
 
 //
 function createGridTemplate() {
@@ -149,6 +168,7 @@ tools.addEventListener("click", (e) => {
 // ! inv event listner
 /**  highlight selected tool/tile */
 function select(target, appropriateElement, inventoryTile) {
+  // todo: remove whatever is selected because of redundancy
   removeHighlightSelection(dirtSquare);
   removeHighlightSelection(grassSquare);
   removeHighlightSelection(rockSquare);
@@ -157,7 +177,7 @@ function select(target, appropriateElement, inventoryTile) {
   removeHighlightSelection(shovel);
   removeHighlightSelection(axe);
   removeHighlightSelection(pickaxe);
-  highlightSelection(appropriateElement);
+  if (appropriateElement) highlightSelection(appropriateElement);
 
   if (inventoryTile > 0) {
     currentTile = target;
@@ -219,3 +239,4 @@ grid.addEventListener("click", (e) => {
 });
 
 updateCounters();
+resetButton.addEventListener("click", resetWorld);
